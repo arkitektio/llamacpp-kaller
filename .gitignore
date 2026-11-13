@@ -1,0 +1,26 @@
+# Arkitekt's credentials, caches and the agent's journal.
+.arkitekt/*.json
+.arkitekt/cache/
+.arkitekt/servers/
+.arkitekt/rekuest_journal.db*
+.arkitekt/rekuest_state.db*
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+.pytest_cache/
+.ruff_cache/
+
+# Virtual environments
+.venv
+
+# llama-server logs
+logs/
+
+
+# This node's configuration; see .env.example and setups.example.yaml
+.env
+setups.yaml

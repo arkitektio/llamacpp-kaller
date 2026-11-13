@@ -1,0 +1,31 @@
+# Copy to setups.yaml and adjust. One file, several named setups; choose one with
+# LLAMA_PROFILE (or `default:` below). Environment variables and .env override any value.
+# The keys are the LLAMA_* variables without the prefix: see localkaller/setups.py.
+default: qwen
+
+defaults:
+  # Default: ~/sw/llama.cpp/build/bin/llama-server if built there, else llama-server on PATH.
+  # server_bin: /opt/llama.cpp/bin/llama-server
+  log_dir: logs
+  cache: models          # where `hf:` downloads go
+  start_timeout: 7200    # a first download of 100+ GB takes a while
+
+setups:
+  # Downloaded from Hugging Face on first start: nothing to prepare on the node.
+  qwen:
+    hf: unsloth/Qwen3.8-Flash-Next-GGUF:UD-Q4_K_XL
+    alias: qwen3.8-flash-next
+    ctx: 65536
+    args: [--reasoning-budget, "2048", --fit-target, "10240", --parallel, "4"]
+
+  # A GGUF already on disk (the first shard of a split model). For a model larger than the
+  # GPU never add -ngl or -ot: they turn llama.cpp's automatic fit off.
+  deepseek:
+    model: /models/DeepSeek-V4.1-Flash-1017-GGUF/UD-IQ3_S/DeepSeek-V4.1-Flash-1017-UD-IQ3_S-00001-of-00008.gguf
+    alias: deepseek-v4.1-flash
+    ctx: 131072
+    args: --temp 1.0 --top-p 1.0 --top-k 0 --min-p 0.0 --reasoning-budget 2048 --fit-target 10240 --parallel 4
+
+  # A llama-server someone else runs.
+  shared:
+    attach_url: http://127.0.0.1:8080

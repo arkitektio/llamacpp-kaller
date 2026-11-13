@@ -1,0 +1,28 @@
+build_command:
+- docker
+- buildx
+- build
+- --platform
+- '{platform}'
+- '{output}'
+- -t
+- '{tag}'
+- -f
+- '{dockerfile}'
+- .
+capabilities: []
+description: llama.cpp server-cuda image plus kaller wired to it; the host needs the
+  NVIDIA Container Toolkit
+dockerfile: Dockerfile
+platforms:
+- linux/amd64
+- linux/arm64
+selectors:
+- compute_capability: null
+  count: 1
+  cuda_cores: null
+  cuda_version: null
+  kind: cuda
+  memory: null
+  required: true
+  weight: 1
