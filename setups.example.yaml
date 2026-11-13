@@ -26,6 +26,14 @@ setups:
     ctx: 131072
     args: --temp 1.0 --top-p 1.0 --top-k 0 --min-p 0.0 --reasoning-budget 2048 --fit-target 10240 --parallel 4
 
+  # Small enough for an 11 GB consumer GPU (e.g. RTX 2080 Ti): 6 GB, entirely on the GPU.
+  # Tool calls work, but a 9B model chooses actions less reliably than the large ones.
+  qwen-9b:
+    hf: unsloth/Qwen3.5-9B-GGUF:UD-Q4_K_XL
+    alias: qwen3.5-9b
+    ctx: 32768
+    args: [-ngl, "999", --reasoning-budget, "1024", --parallel, "2"]
+
   # A llama-server someone else runs.
   shared:
     attach_url: http://127.0.0.1:8080
